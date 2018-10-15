@@ -14,8 +14,8 @@ Graph.prototype.show = function() {
 
 Graph.prototype.move = function() {
     for (let i = 0; i < this.vertices.length; i++) {
-        this.vertices[i].pos.x += random(-3, 3);
-        this.vertices[i].pos.y += random(-3, 3);
+        this.vertices[i].pos.x += random(-1, 1);
+        this.vertices[i].pos.y += random(-1, 1);
     }
 };
 
