@@ -25,7 +25,6 @@ Graph.prototype.move = function() {
         if (this.vertices[i].pos.y + ranY >= d && this.vertices[i].pos.y + ranY <= height - d) {
             this.vertices[i].pos.y += random(-1, 1);
         }
-
     }
 };
 
