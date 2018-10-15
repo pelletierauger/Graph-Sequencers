@@ -11,6 +11,7 @@ function setup() {
     cnvs = createCanvas(windowWidth, windowHeight);
     ctx = cnvs.drawingContext;
     canvasDOM = document.getElementById('defaultCanvas0');
+    textFont('Inconsolata');
     frameRate(30);
     background(200);
     fill(0);
@@ -48,6 +49,14 @@ function setup() {
     //     let r2 = i + 1;
     //     g.createEdge(g.vertices[r1], g.vertices[r2]);
     // }
+    for (let i = 0; i < 2; i++) {
+        let ran = floor(random(g.vertices.length));
+        g.vertices[ran].addFunction(1);
+        ran = floor(random(g.vertices.length));
+        g.vertices[ran].addFunction(2);
+        ran = floor(random(g.vertices.length));
+        g.vertices[ran].addFunction(4);
+    }
     for (let i = 0; i < 3; i++) {
         let rW = floor(random(g.vertices.length));
         w = new Walker(g.vertices[rW]);

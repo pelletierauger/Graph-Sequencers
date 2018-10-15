@@ -30,6 +30,9 @@ Walker.prototype.walk = function() {
         this.v = this.goalV;
         this.goalV = null;
         // this.v.env.play();
+        if (this.v.functions) {
+            song.currentChord = this.v.functions;
+        }
         this.sing();
     }
 };
@@ -39,7 +42,8 @@ Walker.prototype.sing = function() {
     if (currentVoice >= voices.length) {
         currentVoice = 0;
     }
-    voices[currentVoice].osc.freq(this.v.freq);
+    let osc = song.getFrequency(this.v.freq);
+    voices[currentVoice].osc.freq(osc);
     voices[currentVoice].env.play();
 };
 
@@ -47,7 +51,7 @@ Walker.prototype.sing = function() {
 Walker.prototype.show = function() {
     if (!this.walking) {
         fill(0);
-        ellipse(this.v.pos.x, this.v.pos.y, 15);
+        ellipse(this.v.pos.x, this.v.pos.y, 20);
     } else {
         let d = map(this.walked, 0, this.distanceToWalk, 0, 1);
         let x = lerp(this.v.pos.x, this.goalV.pos.x, d);

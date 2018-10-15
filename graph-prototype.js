@@ -13,9 +13,19 @@ Graph.prototype.show = function() {
 };
 
 Graph.prototype.move = function() {
+    let d = 60;
     for (let i = 0; i < this.vertices.length; i++) {
-        this.vertices[i].pos.x += random(-1, 1);
-        this.vertices[i].pos.y += random(-1, 1);
+        let ranX = random(-1, 1);
+        if (this.vertices[i].pos.x + ranX >= (width - height) * 0.5 + d) {
+            if (this.vertices[i].pos.x + ranX <= (((width - height) * 0.5) + d + height - (d * 2) * 0.5) - d) {
+                this.vertices[i].pos.x += random(-1, 1);
+            }
+        }
+        let ranY = random(-1, 1);
+        if (this.vertices[i].pos.y + ranY >= d && this.vertices[i].pos.y + ranY <= height - d) {
+            this.vertices[i].pos.y += random(-1, 1);
+        }
+
     }
 };
 
