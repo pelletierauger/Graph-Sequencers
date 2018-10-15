@@ -10,5 +10,6 @@ let Voice = function() {
     this.osc.start();
     this.osc.freq(440);
     this.osc.amp(this.env);
+    // reverb.process(this.osc, 4, 2);
     voices.push(this);
 };
