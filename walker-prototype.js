@@ -5,8 +5,9 @@ let Walker = function(v) {
     this.goalV = null;
     this.distanceToWalk = null;
     this.walking = false;
-    this.speed = 10;
+    this.speed = 5;
     walkers.push(this);
+    this.extraVelocity = 0;
 };
 
 Walker.prototype.startWalking = function() {
@@ -18,13 +19,17 @@ Walker.prototype.startWalking = function() {
             this.goalV = this.v.edges[r].a;
         }
     }
+    this.extraVelocity = 10;
     this.walking = true;
     this.walked = 0;
     this.distanceToWalk = dist(this.v.pos.x, this.v.pos.y, this.goalV.pos.x, this.goalV.pos.y);
 };
 
 Walker.prototype.walk = function() {
-    this.walked += this.speed;
+    this.walked += this.speed + this.extraVelocity;
+    if (this.extraVelocity) {
+        this.extraVelocity -= 0.5;
+    }
     if (this.walked >= this.distanceToWalk) {
         this.walking = false;
         this.v = this.goalV;
@@ -44,6 +49,7 @@ Walker.prototype.sing = function() {
     }
     let osc = song.getFrequency(this.v.freq);
     voices[currentVoice].osc.freq(osc);
+    voices[currentVoice].osc.pan(random(-1, 1));
     voices[currentVoice].env.play();
 };
 
