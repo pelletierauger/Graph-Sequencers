@@ -21,7 +21,7 @@ let Vertex = function(x, y, g) {
 Vertex.prototype.show = function() {
     stroke(0);
     // noFill();
-    fill(200);
+    fill(255);
     ellipse(this.pos.x, this.pos.y, 15);
     if (this.functions) {
         // stroke(0);
