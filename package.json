@@ -1,0 +1,23 @@
+{
+  "name": "graph-sequencers",
+  "version": "0.0.1",
+  "description": "Graph-shaped step sequencers.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pelletierauger/Graph-Sequencers.git"
+  },
+  "author": "Guillaume Pelletier-Auger",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pelletierauger/Graph-Sequencers/issues"
+  },
+  "homepage": "https://github.com/pelletierauger/Graph-Sequencers#readme",
+  "dependencies": {
+    "osc": "2.2.4"
+  }
+}
