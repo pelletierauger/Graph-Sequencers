@@ -32,28 +32,28 @@ function setup() {
     }
 
     let padding = 100;
+    for (let i = 0; i < 200; i++) {
+        let d = p + 40;
+        // let p = d + 30;
+        let x = random(d, width - d);
+        let y = random(d, height - d);
+        let v = new Vertex(x, y, g.vertices);
+    }
+    for (let i = 0; i < 200; i++) {
+        let r1 = floor(random(g.vertices.length));
+        let r2 = floor(random(g.vertices.length));
+        g.createEdge(g.vertices[r1], g.vertices[r2]);
+    }
     // for (let i = 0; i < 100; i++) {
-    //     let d = p + 40;
-    //     // let p = d + 30;
-    //     let x = random((width - height) * 0.5 + d, (((width - height) * 0.5) + d + height - (d * 2) * 0.5) - d);
-    //     let y = random(d, height - d);
+    //     let x = (cos(i) * i * frameCount) + width / 2;
+    //     let y = (sin(i) * i * frameCount) + height / 2;
     //     let v = new Vertex(x, y, g.vertices);
     // }
     // for (let i = 0; i < 99; i++) {
-    //     let r1 = floor(random(g.vertices.length));
-    //     let r2 = floor(random(g.vertices.length));
+    //     let r1 = i;
+    //     let r2 = i + 1;
     //     g.createEdge(g.vertices[r1], g.vertices[r2]);
     // }
-    for (let i = 0; i < 100; i++) {
-        let x = (cos(i) * i * frameCount) + width / 2;
-        let y = (sin(i) * i * frameCount) + height / 2;
-        let v = new Vertex(x, y, g.vertices);
-    }
-    for (let i = 0; i < 99; i++) {
-        let r1 = i;
-        let r2 = i + 1;
-        g.createEdge(g.vertices[r1], g.vertices[r2]);
-    }
     for (let i = 0; i < 2; i++) {
         let ran = floor(random(g.vertices.length));
         g.vertices[ran].addFunction(1);
@@ -80,15 +80,15 @@ function draw() {
     background(255);
     stroke(0);
     noFill();
-    rect((width - height) * 0.5, p, p + height - (p * 2) * 0.5, height - (p * 2));
-    for (let i = 0; i < 100; i++) {
-        let osc = 10 + frameCount * 0.0001;
-        let x = (cos(i * osc) * i * 3.5) + width / 2;
-        let y = (sin(i * osc) * i * 3.5) + height / 2;
-        g.vertices[i].pos.x = x;
-        g.vertices[i].pos.y = y;
-        // let v = new Vertex(x, y, g.vertices);
-    }
+    // rect((width - height) * 0.5, p, p + height - (p * 2) * 0.5, height - (p * 2));
+    // for (let i = 0; i < 100; i++) {
+    //     let osc = 10 + frameCount * 0.0001;
+    //     let x = (cos(i * osc) * i * 3.5) + width / 2;
+    //     let y = (sin(i * osc) * i * 3.5) + height / 2;
+    //     g.vertices[i].pos.x = x;
+    //     g.vertices[i].pos.y = y;
+    //     // let v = new Vertex(x, y, g.vertices);
+    // }
     g.move();
     g.show();
     if (traversing) {

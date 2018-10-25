@@ -5,7 +5,7 @@ let Walker = function(v) {
     this.goalV = null;
     this.distanceToWalk = null;
     this.walking = false;
-    this.speed = 5;
+    this.speed = 15;
     walkers.push(this);
     this.extraVelocity = 0;
 };
@@ -19,7 +19,7 @@ Walker.prototype.startWalking = function() {
             this.goalV = this.v.edges[r].a;
         }
     }
-    this.extraVelocity = 10;
+    this.extraVelocity = 20;
     this.walking = true;
     this.walked = 0;
     this.distanceToWalk = dist(this.v.pos.x, this.v.pos.y, this.goalV.pos.x, this.goalV.pos.y);
