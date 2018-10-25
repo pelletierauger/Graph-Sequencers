@@ -48,9 +48,10 @@ Walker.prototype.sing = function() {
         currentVoice = 0;
     }
     let osc = song.getFrequency(this.v.freq);
-    voices[currentVoice].osc.freq(osc);
-    voices[currentVoice].osc.pan(random(-1, 1));
-    voices[currentVoice].env.play();
+    // voices[currentVoice].osc.freq(osc);
+    // voices[currentVoice].osc.pan(random(-1, 1));
+    // voices[currentVoice].env.play();
+    socket.emit('note', osc);
 };
 
 
