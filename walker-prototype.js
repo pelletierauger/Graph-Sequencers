@@ -5,7 +5,7 @@ let Walker = function(v) {
     this.goalV = null;
     this.distanceToWalk = null;
     this.walking = false;
-    this.speed = 15;
+    this.speed = 5;
     walkers.push(this);
     this.extraVelocity = 0;
 };
@@ -43,14 +43,7 @@ Walker.prototype.walk = function() {
 };
 
 Walker.prototype.sing = function() {
-    currentVoice++;
-    if (currentVoice >= voices.length) {
-        currentVoice = 0;
-    }
     let osc = song.getFrequency(this.v.freq);
-    // voices[currentVoice].osc.freq(osc);
-    // voices[currentVoice].osc.pan(random(-1, 1));
-    // voices[currentVoice].env.play();
     socket.emit('note', osc);
 };
 
