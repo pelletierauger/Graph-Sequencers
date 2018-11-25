@@ -1,12 +1,11 @@
 let looping = false;
+let keysActive = true;
 let traversing = false;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/sketch";
 let maxFrames = 20;
 let g, w;
-// let wave;
 let p = 20;
-// let reverb;
 let traversed = 0;
 
 function setup() {
@@ -15,8 +14,6 @@ function setup() {
     ctx = cnvs.drawingContext;
     canvasDOM = document.getElementById('defaultCanvas0');
     textFont('Inconsolata');
-
-    // reverb = new p5.Reverb();
     frameRate(30);
     background(255);
     fill(0);
@@ -26,11 +23,6 @@ function setup() {
     if (!looping) {
         noLoop();
     }
-
-    for (let i = 0; i < 30; i++) {
-        let voice = new Voice();
-    }
-
     let padding = 100;
     for (let i = 0; i < 200; i++) {
         let d = p + 40;
@@ -54,7 +46,7 @@ function setup() {
     //     let r2 = i + 1;
     //     g.createEdge(g.vertices[r1], g.vertices[r2]);
     // }
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 4; i++) {
         let ran = floor(random(g.vertices.length));
         g.vertices[ran].addFunction(1);
         ran = floor(random(g.vertices.length));
@@ -118,25 +110,27 @@ function draw() {
 }
 
 function keyPressed() {
-    if (keyCode === 32) {
-        if (looping) {
-            noLoop();
-            looping = false;
-        } else {
-            loop();
-            looping = true;
+    if (keysActive) {
+        if (keyCode === 32) {
+            if (looping) {
+                noLoop();
+                looping = false;
+            } else {
+                loop();
+                looping = true;
+            }
         }
-    }
-    if (key == 'p' || key == 'P') {
-        frameExport();
-    }
-    if (key == 'r' || key == 'R') {
-        window.location.reload();
-    }
-    if (key == 'm' || key == 'M') {
-        redraw();
-    }
-    if (key == 'l' || key == 'L') {
-        traversing = true;
+        if (key == 'p' || key == 'P') {
+            frameExport();
+        }
+        if (key == 'r' || key == 'R') {
+            window.location.reload();
+        }
+        if (key == 'm' || key == 'M') {
+            redraw();
+        }
+        if (key == 'l' || key == 'L') {
+            traversing = true;
+        }
     }
 }
