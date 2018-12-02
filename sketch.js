@@ -7,9 +7,14 @@ let maxFrames = 20;
 let g, w;
 let p = 20;
 let traversed = 0;
+let size = 10;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
+    socket.on('receiveOSC', function(data) {
+        // console.log(data.args[0].value);
+        size = data.args[0].value;
+    });
     cnvs = createCanvas(windowWidth, windowHeight);
     ctx = cnvs.drawingContext;
     canvasDOM = document.getElementById('defaultCanvas0');
