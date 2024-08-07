@@ -22,14 +22,15 @@ Vertex.prototype.show = function() {
     stroke(0);
     // noFill();
     fill(255);
-    ellipse(this.pos.x, this.pos.y, 15);
+    // ellipse(this.pos.x, this.pos.y, 15);
+    vertices.push(this.pos.x, this.pos.y, 1, 1);
     if (this.functions) {
         // stroke(0);
         // noFill();
         // fill(200);
-        ellipse(this.pos.x, this.pos.y, 25);
+        // ellipse(this.pos.x, this.pos.y, 25);
 
-        ellipse(this.pos.x, this.pos.y, 20);
+        // ellipse(this.pos.x, this.pos.y, 20);
         fill(0);
         strokeWeight(0.5);
         if (this.functions == 1) {

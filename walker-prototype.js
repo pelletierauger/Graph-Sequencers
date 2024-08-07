@@ -5,7 +5,7 @@ let Walker = function(v) {
     this.goalV = null;
     this.distanceToWalk = null;
     this.walking = false;
-    this.speed = 5;
+    this.speed = 0.1;
     walkers.push(this);
     this.extraVelocity = 0;
 };
@@ -19,7 +19,7 @@ Walker.prototype.startWalking = function() {
             this.goalV = this.v.edges[r].a;
         }
     }
-    this.extraVelocity = 20;
+    this.extraVelocity = 0;
     this.walking = true;
     this.walked = 0;
     this.distanceToWalk = dist(this.v.pos.x, this.v.pos.y, this.goalV.pos.x, this.goalV.pos.y);
@@ -28,7 +28,7 @@ Walker.prototype.startWalking = function() {
 Walker.prototype.walk = function() {
     this.walked += this.speed + this.extraVelocity;
     if (this.extraVelocity) {
-        this.extraVelocity -= 0.5;
+        // this.extraVelocity -= 0.5;
     }
     if (this.walked >= this.distanceToWalk) {
         this.walking = false;
@@ -50,13 +50,17 @@ Walker.prototype.sing = function() {
 
 Walker.prototype.show = function() {
     if (!this.walking) {
-        fill(0);
-        ellipse(this.v.pos.x, this.v.pos.y, 20);
+        // fill(0);
+        // ellipse(this.v.pos.x, this.v.pos.y, 20);
+
+        vertices.push(this.v.pos.x, this.v.pos.y, 1, 15);
     } else {
         let d = map(this.walked, 0, this.distanceToWalk, 0, 1);
         let x = lerp(this.v.pos.x, this.goalV.pos.x, d);
         let y = lerp(this.v.pos.y, this.goalV.pos.y, d);
-        fill(0);
-        ellipse(x, y, 5);
+        // fill(0);
+        // ellipse(x, y, 5);
+
+        vertices.push(x, y, 1, 2);
     }
 };

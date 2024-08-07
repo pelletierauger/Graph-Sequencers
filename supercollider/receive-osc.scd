@@ -10,8 +10,8 @@ SynthDef.new(\pulseTest, {
     env = env * lfo;
     sig1 = LFTri.ar((frequency + 1)) * env;
     sig2 = LFTri.ar(frequency) * env;
-    sig1 = FreeVerb.ar(sig1, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
-	sig2 = FreeVerb.ar(sig2, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
+    // sig1 = FreeVerb.ar(sig1, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
+	// sig2 = FreeVerb.ar(sig2, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
     Out.ar(0, sig1);
     Out.ar(1, sig2);
 }).add;
@@ -25,8 +25,8 @@ OSCdef.new(
         arg msg, time, addr, port;
         // [msg, time, addr, port].postln;
         // msg[1].postln;
-        d = Synth.new(\pinkTest, [\frequency, msg[1] * 2]);
-		d = Synth.new(\pulseTest, [\frequency, msg[1] * 0.5]);
+        // d = Synth.new(\pinkTest, [\frequency, msg[1] * 2]);
+        d = Synth.new(\pulseTest, [\frequency, msg[1] * 0.5]);
     },
     '/hello/from/oscjs'
 );
