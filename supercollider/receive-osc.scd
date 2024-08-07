@@ -11,12 +11,27 @@ SynthDef.new(\pulseTest, {
     sig1 = LFTri.ar((frequency + 1)) * env;
     sig2 = LFTri.ar(frequency) * env;
     // sig1 = FreeVerb.ar(sig1, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
-	// sig2 = FreeVerb.ar(sig2, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
+    // sig2 = FreeVerb.ar(sig2, mix: 0.3, room: 0.95, damp: 0.15, mul: 1, add: 0);
     Out.ar(0, sig1);
     Out.ar(1, sig2);
 }).add;
 )
 
+(
+SynthDef.new(\pulseTest, {
+    arg frequency = 220;
+    var sig, env, shift;
+    env = EnvGen.kr(
+    Env([0,1,0.5,0], [0.1,0.3,3]),
+    doneAction:2);
+    shift = round(Rand(1,2))*12;
+    sig = MiBraids.ar(
+    frequency.cpsmidi+shift, 
+    timbre: 0.5, color: 0.5, model:4);
+    sig = sig * 0.2 * env;
+    Out.ar(0, sig!2);
+}).add;
+)
 
 (
 OSCdef.new(

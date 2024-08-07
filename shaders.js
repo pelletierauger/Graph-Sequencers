@@ -678,7 +678,7 @@ smoothLine3D.fragText = `
         col = smoothstep(0., 1., col);
         // col = mix(pow(col, 10.)*0.25, col, sin(time*0.1+pos.y*0.5e1)*0.5+0.5);
                 // c2l =x(pow(col, 10.)*0.2, col, sin(t*0.1+pos.y*0.5e1)*0.5+0.5);
-                // col = mix(pow(col, 10.)*0.2, col, sin(-t*0.1+length(pos * vec2(16./9.,1.))*0.5e1)*0.5+0.5);
+                col = mix(pow(col, 10.)*0.2, col, sin(-t*0.1+length(pos * vec2(16./9.,1.))*0.5e1)*0.5+0.5);
         gl_FragColor = vec4(c.rgb, c.a * (max(col, 0.) - (rando * 0.05)));
         gl_FragColor.g = pow(col, 2.) *  0.2;
         gl_FragColor.b = pow(col, 2.) *  0.2;
@@ -836,6 +836,7 @@ if (shadersReadyToInitiate) {
 }
 
 }
+
 let smoothDots = new ShaderProgram("smooth-dots");
 
 // Spatially fluctuating smoothDots

@@ -23,6 +23,8 @@ let pmouse = [0, 0];
 let smouse = [0, 0];
 let resolutionScalar = 0.5;
 let resolutionBG;
+let ansiChars = "";
+let noPainting = true;
 
 let vertex_buffer, indices2_buffer, Index_Buffer, color_buffer, width_buffer, uv_buffer, dots_buffer;
 let vertex_bufferA, vertex_bufferB;
@@ -216,7 +218,7 @@ function setup() {
         // let x = random(d, width - d);
         // let y = random(d, height - d);
         let x = map(Math.random(), 0, 1, -0.9, 0.9);
-        let y = map(Math.random(), 0, 1, -0.72, 0.9);
+        let y = map(Math.random(), 0, 1, -0.8, 0.9);
         x *= (16/9);
         let v = new Vertex(x, y, g.vertices);
     }
@@ -286,8 +288,11 @@ function setup() {
         g.vertices[ran].addFunction(4);
     }
     for (let i = 0; i < 3; i++) {
-        let rW = floor(random(g.vertices.length));
-        w = new Walker(g.vertices[rW]);
+        let vertexOrigin;
+        do {
+            vertexOrigin = random(g.vertices);
+        } while (vertexOrigin.edges.length < 1);
+        w = new Walker(vertexOrigin);
     }
 
     // wave = new p5.Oscillator();
@@ -295,6 +300,8 @@ function setup() {
     // wave.start();
     // wave.amp(0.4);
     // wave.freq(440);
+    ansiChars = swatchesArr;
+    swatchesArr = "";
 }
 
 draw = function() {
@@ -321,7 +328,7 @@ draw = function() {
                 walkers[i].show();
             // }
             if (envirLooping) {
-                if (!walkers[i].walking) {
+                if (!walkers[i].walking && !walkers[i].sleeping) {
                     walkers[i].startWalking();
                 }
                 if (walkers[i].walking) {
@@ -701,7 +708,11 @@ keyDown = function(e) {
         }
         // console.log(event.keyCode);
         if (e.keyCode == 27 && ge.activeTab !== null) {
-            mode = (mode + 1) % 3;
+            if (noPainting) {
+                mode = (mode + 1) % 2;
+            } else {
+                mode = (mode + 1) % 3;
+            }
         }
         if (mode == 0) {
                 if (vtActive) {
@@ -764,6 +775,14 @@ function makePrim() {
         }
     // }
 }
+
+getAnsiChars = function() {
+    if (swatchesArr.length == 0) {
+        swatchesArr = ansiChars;
+    } else {
+        swatchesArr = "";
+    }
+};
 
 
 document.onkeydown = keyDown; 
