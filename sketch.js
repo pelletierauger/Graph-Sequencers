@@ -218,7 +218,7 @@ function setup() {
         // let x = random(d, width - d);
         // let y = random(d, height - d);
         let x = map(Math.random(), 0, 1, -0.9, 0.9);
-        let y = map(Math.random(), 0, 1, -0.8, 0.9);
+        let y = map(Math.random(), 0, 1, -0.9, 0.9);
         x *= (16/9);
         let v = new Vertex(x, y, g.vertices);
     }
@@ -304,6 +304,13 @@ function setup() {
     swatchesArr = "";
 }
 
+ox = 0; oy = 0;
+// cameraSpeed = 0;
+// desiredSpeed = 0;
+// cameraPos = new p5.Vector(0, 0);
+// cameraVel = new p5.Vector(0, 0);
+// cameraAcc = new p5.Vector(0, 0);
+// walkerPos = new p5.Vector(0, 0);
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     reset3DLines();
@@ -340,12 +347,50 @@ draw = function() {
             traversed++;
         }
     }
-    currentProgram = getProgram("smooth-dots-3D");
-    gl.useProgram(currentProgram);
-    draw3DDots(currentProgram);
+    let d, x, y;
+    if (!walkers[0].walking) {
+        x = walkers[0].v.pos.x;
+        y = walkers[0].v.pos.y;
+    } else {
+        d = map(walkers[0].walked, 0, walkers[0].distanceToWalk, 0, 1);
+        x = lerp(walkers[0].v.pos.x, walkers[0].goalV.pos.x, d);
+        y = lerp(walkers[0].v.pos.y, walkers[0].goalV.pos.y, d);
+    }
+    // desiredSpeed = dist(ox, oy, x, y);
+    // cameraSpeed = (cameraSpeed + desiredSpeed) * 0.035;
+    // cameraSpeed = lerp(cameraSpeed, desiredSpeed, 0.001);
+    
+    // cameraSpeed = cameraSpeed * 0.97 + desiredSpeed * 0.001;
+    // console.log(desiredSpeed);
+    // ox = lerp(ox, x, cameraSpeed);
+    // oy = lerp(oy, y, cameraSpeed);
+    ox = lerp(ox, x, 0.01);
+    oy = lerp(oy, y, 0.01);
+    // walkerPos.x = x; walkerPos.y = y;
+    // cameraAcc = p5.Vector.sub(walkerPos, cameraPos);
+    // cameraAcc.mult(0.005);
+    // cameraVel.add(cameraAcc);
+    // cameraPos.add(cameraVel);
+    // cameraVel.mult(0.75);
+    // ox = cameraPos.x;
+    // oy = cameraPos.y;
+    let zoom = 2;
+    for (let i = 0; i < verticesA.length; i += 3) {
+        verticesA[i] = (verticesA[i] - ox) * zoom;
+        verticesA[i+1] = (verticesA[i+1] - oy) * zoom;
+        verticesB[i] = (verticesB[i] - ox) * zoom;
+        verticesB[i+1] = (verticesB[i+1] - oy) * zoom;;
+    }
+    for (let i = 0; i < vertices.length; i += 4) {
+        vertices[i] = (vertices[i] - ox) * zoom;
+        vertices[i+1] = (vertices[i+1] - oy) * zoom;
+    }
     currentProgram = getProgram("smooth-line-3D");
     gl.useProgram(currentProgram);
     draw3DLines();
+    currentProgram = getProgram("smooth-dots-3D");
+    gl.useProgram(currentProgram);
+    draw3DDots(currentProgram);
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
     disturb = gl.getUniformLocation(currentProgram, "disturb"); 

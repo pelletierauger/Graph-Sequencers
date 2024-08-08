@@ -25,14 +25,14 @@ Graph.prototype.move = function() {
         // if (this.vertices[i].pos.y + ranY >= d && this.vertices[i].pos.y + ranY <= height - d) {
         //     this.vertices[i].pos.y += random(-1, 1);
         // }
-        let x = this.vertices[i].pos.x;
-        let y = this.vertices[i].pos.x;
+        // let x = this.vertices[i].pos.x;
+        // let y = this.vertices[i].pos.x;
         // let newX = this.vertices[i].pos.x + openSimplex.noise3D(x, y, drawCount * 5e-2) * 1e-2;
         // let newY = this.vertices[i].pos.y + openSimplex.noise3D(x, y, drawCount * 5e-2 + 1e4) * 1e-2;
         // this.vertices[i].pos.x = constrain(newX, -0.9 * (16/9), 0.9 * (16/9));
         // this.vertices[i].pos.y = constrain(newY, -0.9, 0.9);
-        this.vertices[i].pos.x += Math.cos((drawCount + i)*1e-1) * 1e-3;
-        this.vertices[i].pos.y += Math.sin((drawCount + i)*1e-1) * 1e-3;
+        this.vertices[i].pos.x += Math.cos((-drawCount + i)*1e-1) * 1e-3;
+        this.vertices[i].pos.y += Math.sin((-drawCount + i)*1e-1) * 1e-3;
     }
 };
 

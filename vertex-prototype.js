@@ -19,9 +19,9 @@ let Vertex = function(x, y, g) {
 };
 
 Vertex.prototype.show = function() {
-    stroke(0);
+    // stroke(0);
     // noFill();
-    fill(255);
+    // fill(255);
     // ellipse(this.pos.x, this.pos.y, 15);
     vertices.push(this.pos.x, this.pos.y, 1, 1);
     if (this.functions) {
@@ -31,16 +31,16 @@ Vertex.prototype.show = function() {
         // ellipse(this.pos.x, this.pos.y, 25);
 
         // ellipse(this.pos.x, this.pos.y, 20);
-        fill(0);
-        strokeWeight(0.5);
+        // fill(0);
+        // strokeWeight(0.5);
         if (this.functions == 1) {
-            text("I", this.pos.x - 3, this.pos.y + 4);
+            // text("I", this.pos.x - 3, this.pos.y + 4);
         } else if (this.functions == 2) {
-            text("ii", this.pos.x - 6, this.pos.y + 4);
+            // text("ii", this.pos.x - 6, this.pos.y + 4);
         } else if (this.functions == 4) {
-            text("IV", this.pos.x - 6, this.pos.y + 4);
+            // text("IV", this.pos.x - 6, this.pos.y + 4);
         }
-        strokeWeight(1);
+        // strokeWeight(1);
     }
 };
 

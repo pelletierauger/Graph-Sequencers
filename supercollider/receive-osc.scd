@@ -27,7 +27,7 @@ SynthDef.new(\pulseTest, {
     shift = round(Rand(1,2))*12;
     sig = MiBraids.ar(
     frequency.cpsmidi+shift, 
-    timbre: 0.5, color: 0.5, model:4);
+    timbre: 0.5, color: 0.5, model:42);
     sig = sig * 0.2 * env;
     Out.ar(0, sig!2);
 }).add;
