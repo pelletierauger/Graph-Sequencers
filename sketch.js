@@ -25,6 +25,7 @@ let resolutionScalar = 0.5;
 let resolutionBG;
 let ansiChars = "";
 let noPainting = true;
+let batchExport = false;
 
 let vertex_buffer, indices2_buffer, Index_Buffer, color_buffer, width_buffer, uv_buffer, dots_buffer;
 let vertex_bufferA, vertex_bufferB;
