@@ -61,6 +61,11 @@ Walker.prototype.sing = function() {
     socket.emit('note', osc);
 };
 
+Walker.prototype.sing = function() {
+    // let osc = song.getFrequency(this.v.freq);
+    socket.emit('note', this.extraVelocity);
+};
+
 Walker.prototype.sleep = function() {
     this.sleeping = true;
 };
