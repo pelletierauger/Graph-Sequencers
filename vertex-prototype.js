@@ -1,6 +1,7 @@
 let Vertex = function(x, y, g) {
     this.pos = { x: x, y: y };
     this.edges = [];
+    this.lastVisited = 0;
     g.push(this);
     // var frequencies = [98.00, 123.47, 146.83, 196.00, 246.94, 293.66];
     let r = floor(random(6));
@@ -23,13 +24,13 @@ Vertex.prototype.show = function() {
     // noFill();
     // fill(255);
     // ellipse(this.pos.x, this.pos.y, 15);
-    vertices.push(this.pos.x, this.pos.y, 1, 1);
+    // vertices.push(this.pos.x, this.pos.y, 1, 1);
+    vertices.push(this.pos.x, this.pos.y, cameraSpeed, 1);
     if (this.functions) {
         // stroke(0);
         // noFill();
         // fill(200);
         // ellipse(this.pos.x, this.pos.y, 25);
-
         // ellipse(this.pos.x, this.pos.y, 20);
         // fill(0);
         // strokeWeight(0.5);

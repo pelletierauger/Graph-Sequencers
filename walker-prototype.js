@@ -9,6 +9,7 @@ let Walker = function(v) {
     walkers.push(this);
     this.extraVelocity = 0;
     this.sleeping = false;
+    this.traverse = false;
 };
 
 Walker.prototype.teleport = function() {
@@ -25,12 +26,40 @@ Walker.prototype.teleport = function() {
 };
 
 Walker.prototype.startWalking = function() {
-    if (this.v.edges) {
-        let r = floor(random(this.v.edges.length));
-        if (this.v.edges[r].a == this.v) {
-            this.goalV = this.v.edges[r].b;
-        } else {
-            this.goalV = this.v.edges[r].a;
+    if (this.traverse) {
+        if (this.v.edges) {
+            let oldest = Infinity;
+            let chosen = null;
+            let chosenEdge = null;
+            for (let i = 0; i < this.v.edges.length; i++) {
+                let other;
+                if (this.v.edges[i].a == this.v) {
+                    other = this.v.edges[i].b;
+                } else {
+                    other = this.v.edges[i].a;
+                }
+                if (other.lastVisited < oldest) {
+                    oldest = other.lastVisited;
+                    chosen = other;
+                    chosenEdge = this.v.edges[i];
+                }
+            }
+            if (chosen) {
+                this.goalV = chosen;
+                if (this.e) {
+                    this.e.fire = 1;
+                }
+                this.e = chosenEdge;
+            }
+        }
+    } else {
+        if (this.v.edges) {
+            let r = floor(random(this.v.edges.length));
+            if (this.v.edges[r].a == this.v) {
+                this.goalV = this.v.edges[r].b;
+            } else {
+                this.goalV = this.v.edges[r].a;
+            }
         }
     }
     this.extraVelocity = 0.03;
@@ -47,6 +76,7 @@ Walker.prototype.walk = function() {
     if (this.walked >= this.distanceToWalk) {
         this.walking = false;
         this.v = this.goalV;
+        this.v.lastVisited = drawCount;
         this.goalV = null;
         // this.v.env.play();
         if (this.v.functions) {
@@ -83,7 +113,7 @@ Walker.prototype.show = function() {
         // fill(0);
         // ellipse(this.v.pos.x, this.v.pos.y, 20);
         if (!this.sleeping) {
-            vertices.push(this.v.pos.x, this.v.pos.y, 1, 15);
+            vertices.push(this.v.pos.x, this.v.pos.y, cameraSpeed, 15);
         }
     } else {
         let d = map(this.walked, 0, this.distanceToWalk, 0, 1);
@@ -91,6 +121,6 @@ Walker.prototype.show = function() {
         let y = lerp(this.v.pos.y, this.goalV.pos.y, d);
         // fill(0);
         // ellipse(x, y, 5);
-        vertices.push(x, y, 1, 2);
+        vertices.push(x, y, cameraSpeed, 2);
     }
 };

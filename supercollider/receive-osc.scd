@@ -1,5 +1,9 @@
 s.boot;
 
+~toOSC = NetAddr.new("127.0.0.1", 57121);    // create the NetAddr
+~js = {|s|~toOSC.sendMsg("/eval", s)};
+~js.("console.log('Testing the ~js function')");
+
 (
 SynthDef.new(\pulseTest, {
     arg frequency = 220;

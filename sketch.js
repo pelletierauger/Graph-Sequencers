@@ -110,11 +110,13 @@ function setup() {
     //     // console.log(data.args[0].value);
     //     size = data.args[0].value;
     // });
+    socket.on('receiveOSC', receiveOSC);
     pixelDensity(1);
     noCanvas();
     cnvs = document.getElementById('my_Canvas');
 
-    gl = cnvs.getContext('webgl', { preserveDrawingBuffer: true });
+    // gl = cnvs.getContext('webgl', { preserveDrawingBuffer: true });
+    gl = cnvs.getContext('webgl', {antialias: false, depth: false});
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     // Enable the depth test
     gl.enable(gl.DEPTH_TEST);
@@ -295,7 +297,8 @@ function setup() {
         } while (vertexOrigin.edges.length < 1);
         w = new Walker(vertexOrigin);
     }
-
+    walkers[1].sleep();
+    walkers[2].sleep();
     // wave = new p5.Oscillator();
     // wave.setType("sine");
     // wave.start();
@@ -306,7 +309,7 @@ function setup() {
 }
 
 ox = 0; oy = 0;
-// cameraSpeed = 0;
+cameraSpeed = 0;
 // desiredSpeed = 0;
 // cameraPos = new p5.Vector(0, 0);
 // cameraVel = new p5.Vector(0, 0);
@@ -358,6 +361,7 @@ draw = function() {
         y = lerp(walkers[0].v.pos.y, walkers[0].goalV.pos.y, d);
     }
     // desiredSpeed = dist(ox, oy, x, y);
+    cameraSpeed = dist(ox, oy, x, y);
     // cameraSpeed = (cameraSpeed + desiredSpeed) * 0.035;
     // cameraSpeed = lerp(cameraSpeed, desiredSpeed, 0.001);
     
@@ -365,8 +369,8 @@ draw = function() {
     // console.log(desiredSpeed);
     // ox = lerp(ox, x, cameraSpeed);
     // oy = lerp(oy, y, cameraSpeed);
-    ox = lerp(ox, x, 0.01);
-    oy = lerp(oy, y, 0.01);
+    ox = lerp(ox, x, 0.02);
+    oy = lerp(oy, y, 0.02);
     // walkerPos.x = x; walkerPos.y = y;
     // cameraAcc = p5.Vector.sub(walkerPos, cameraPos);
     // cameraAcc.mult(0.005);
@@ -830,5 +834,23 @@ getAnsiChars = function() {
     }
 };
 
+if (false) {
+
+receiveOSC = function(s) {
+    if (s.address == "/eval") {
+        eval(s.args[0].value);
+    }
+};
+
+socket.off('receiveOSC', receiveOSC);
+socket.on('receiveOSC', receiveOSC);
+
+}
+
+receiveOSC = function(s) {
+    if (s.address == "/eval") {
+        eval(s.args[0].value);
+    }
+};
 
 document.onkeydown = keyDown; 
