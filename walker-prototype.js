@@ -9,7 +9,7 @@ let Walker = function(v) {
     walkers.push(this);
     this.extraVelocity = 0;
     this.sleeping = false;
-    this.traverse = false;
+    this.traverse = true;
 };
 
 Walker.prototype.teleport = function() {
