@@ -60,8 +60,9 @@ if (shadersReadyToInitiate) {
 };
 
 
-
-reformGraph = function() {
+// Doesn’t create duplicate edges,
+// and makes sure to really create numEdges amount of edges;
+reformGraph = function(numEdges = 200, numCandidates = 50) {
     // g = new Graph();
     g.edges = [];
     if (!walkers[0].walking && !walkers[0].sleeping) {
@@ -76,12 +77,66 @@ reformGraph = function() {
     }
     // g.vertices.push(a, b);
     g.createEdge(a, b);
-    for (let i = 0; i < 200; i++) {
+    do {
         let r1 = floor(random(g.vertices.length));
         let v1 = g.vertices[r1].pos;
         let candidates = [];
         let choice;
-        for (let j = 0; j < 50; j++) {
+        for (let j = 0; j < numCandidates; j++) {
+            let r2 = floor(random(g.vertices.length));
+            if (r2 !== r1) {
+                candidates.push(r2);
+            }
+        }
+        let d = Infinity;
+        for (let j = 0; j < candidates.length; j++) {
+            let v2 = g.vertices[candidates[j]].pos;
+            let dd = dist(v1.x, v1.y, v2.x, v2.y);
+            if (dd < d) {
+                choice = candidates[j];
+                d = dd;
+            }
+        }
+        if ((g.vertices[r1].edges.length == 0) ||
+            (g.vertices[choice].edges.length == 0)) {
+            g.createEdge(g.vertices[r1], g.vertices[choice]);
+        } else {
+            let pick = true;
+            for (let i = 0; i < g.vertices[r1].edges.length; i++) {
+                let e = g.vertices[r1].edges[i];
+                if (e.a == g.vertices[choice] || e.b == g.vertices[choice]) {
+                    pick = false;
+                }
+            }
+            if (pick) {
+                g.createEdge(g.vertices[r1], g.vertices[choice]);
+            }
+        }
+    } while (g.edges.length < numEdges);
+};
+
+// Creates duplicate edges
+reformGraph = function(numEdges = 200, numCandidates = 50) {
+    // g = new Graph();
+    g.edges = [];
+    if (!walkers[0].walking && !walkers[0].sleeping) {
+        walkers[0].startWalking();
+    }
+    let a = walkers[0].v;
+    let b = walkers[0].goalV;
+    a.edges = [];
+    b.edges = [];
+    for (let i = 0; i < g.vertices.length; i++) {
+        g.vertices[i].edges = [];
+    }
+    // g.vertices.push(a, b);
+    g.createEdge(a, b);
+    for (let i = 0; i < numEdges; i++) {
+        let r1 = floor(random(g.vertices.length));
+        let v1 = g.vertices[r1].pos;
+        let candidates = [];
+        let choice;
+        for (let j = 0; j < numCandidates; j++) {
             let r2 = floor(random(g.vertices.length));
             if (r2 !== r1) {
                 candidates.push(r2);
@@ -97,6 +152,61 @@ reformGraph = function() {
             }
         }
         g.createEdge(g.vertices[r1], g.vertices[choice]);
+    }
+};
+
+// Doesn’t create duplicate edges
+// And might not create numEdges amount of edges
+reformGraph = function(numEdges = 200, numCandidates = 50) {
+    // g = new Graph();
+    g.edges = [];
+    if (!walkers[0].walking && !walkers[0].sleeping) {
+        walkers[0].startWalking();
+    }
+    let a = walkers[0].v;
+    let b = walkers[0].goalV;
+    a.edges = [];
+    b.edges = [];
+    for (let i = 0; i < g.vertices.length; i++) {
+        g.vertices[i].edges = [];
+    }
+    // g.vertices.push(a, b);
+    g.createEdge(a, b);
+    for (let i = 0; i < numEdges; i++) {
+        let r1 = floor(random(g.vertices.length));
+        let v1 = g.vertices[r1].pos;
+        let candidates = [];
+        let choice;
+        for (let j = 0; j < numCandidates; j++) {
+            let r2 = floor(random(g.vertices.length));
+            if (r2 !== r1) {
+                candidates.push(r2);
+            }
+        }
+        let d = Infinity;
+        for (let j = 0; j < candidates.length; j++) {
+            let v2 = g.vertices[candidates[j]].pos;
+            let dd = dist(v1.x, v1.y, v2.x, v2.y);
+            if (dd < d) {
+                choice = candidates[j];
+                d = dd;
+            }
+        }
+        if ((g.vertices[r1].edges.length == 0) ||
+            (g.vertices[choice].edges.length == 0)) {
+            g.createEdge(g.vertices[r1], g.vertices[choice]);
+        } else {
+            let pick = true;
+            for (let i = 0; i < g.vertices[r1].edges.length; i++) {
+                let e = g.vertices[r1].edges[i];
+                if (e.a == g.vertices[choice] || e.b == g.vertices[choice]) {
+                    pick = false;
+                }
+            }
+            if (pick) {
+                g.createEdge(g.vertices[r1], g.vertices[choice]);
+            }
+        }
     }
 };
 
@@ -214,7 +324,7 @@ reformGraph2 = function() {
     walkers[0].v = g.edges[0].a;
     walkers[0].goalV = g.edges[0].b;
 };
-reformGraph2();
+// reformGraph2();
 
 reformGraphHard = function() {
     // g = new Graph();

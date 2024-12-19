@@ -45,6 +45,14 @@ Vertex.prototype.show = function() {
     }
 };
 
+Vertex.prototype.show = function() {
+    vertices.push(this.pos.x, this.pos.y, 1, 1);
+};
+
+Vertex.prototype.show = function() {
+    vertices.push(this.pos.x, this.pos.y, cameraSpeed, 1);
+};
+
 Vertex.prototype.addEdge = function(e) {
     this.edges.push(e);
 };

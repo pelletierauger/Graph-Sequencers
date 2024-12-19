@@ -113,7 +113,9 @@ Walker.prototype.show = function() {
         // fill(0);
         // ellipse(this.v.pos.x, this.v.pos.y, 20);
         if (!this.sleeping) {
-            vertices.push(this.v.pos.x, this.v.pos.y, cameraSpeed, 15);
+            // vertices.push(this.v.pos.x, this.v.pos.y, cameraSpeed, 15);
+            vertices.push(this.v.pos.x, this.v.pos.y, 0, 15);
+            addCollision(this.v.pos.x, this.v.pos.y, this.extraVelocity);
         }
     } else {
         let d = map(this.walked, 0, this.distanceToWalk, 0, 1);
@@ -121,6 +123,7 @@ Walker.prototype.show = function() {
         let y = lerp(this.v.pos.y, this.goalV.pos.y, d);
         // fill(0);
         // ellipse(x, y, 5);
-        vertices.push(x, y, cameraSpeed, 2);
+        // vertices.push(x, y, cameraSpeed, 2);
+        vertices.push(x, y, 0, 2);
     }
 };

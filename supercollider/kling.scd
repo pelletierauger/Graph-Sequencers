@@ -1,3 +1,4 @@
+s.boot;
 b = Buffer.read(s, "/Users/guillaumepelletier/Desktop/Signora-Demo/mso-bleep1.wav");
 b = Buffer.read(s, "/Users/guillaumepelletier/Desktop/Signora-Demo/mso-bleep1b.wav");
 c = Buffer.read(s, "/Users/guillaumepelletier/Desktop/Signora-Demo/mso-bleep2.wav");

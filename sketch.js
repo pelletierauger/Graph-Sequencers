@@ -311,10 +311,11 @@ function setup() {
 ox = 0; oy = 0;
 cameraSpeed = 0;
 // desiredSpeed = 0;
-// cameraPos = new p5.Vector(0, 0);
-// cameraVel = new p5.Vector(0, 0);
-// cameraAcc = new p5.Vector(0, 0);
-// walkerPos = new p5.Vector(0, 0);
+cameraPos = new p5.Vector(0, 0);
+cameraVel = new p5.Vector(0, 0);
+cameraAcc = new p5.Vector(0, 0);
+walkerPos = new p5.Vector(0, 0);
+
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     reset3DLines();
@@ -361,7 +362,7 @@ draw = function() {
         y = lerp(walkers[0].v.pos.y, walkers[0].goalV.pos.y, d);
     }
     // desiredSpeed = dist(ox, oy, x, y);
-    cameraSpeed = dist(ox, oy, x, y);
+    // cameraSpeed = dist(ox, oy, x, y);
     // cameraSpeed = (cameraSpeed + desiredSpeed) * 0.035;
     // cameraSpeed = lerp(cameraSpeed, desiredSpeed, 0.001);
     
@@ -371,14 +372,20 @@ draw = function() {
     // oy = lerp(oy, y, cameraSpeed);
     ox = lerp(ox, x, 0.02);
     oy = lerp(oy, y, 0.02);
-    // walkerPos.x = x; walkerPos.y = y;
-    // cameraAcc = p5.Vector.sub(walkerPos, cameraPos);
-    // cameraAcc.mult(0.005);
-    // cameraVel.add(cameraAcc);
-    // cameraPos.add(cameraVel);
-    // cameraVel.mult(0.75);
-    // ox = cameraPos.x;
-    // oy = cameraPos.y;
+    // ox = x, oy = y;
+    // updateCamera(x, y);
+    // ox = camera.x, oy = camera.y;
+    
+    walkerPos.x = x; walkerPos.y = y;
+    cameraAcc = p5.Vector.sub(walkerPos, cameraPos);
+    cameraAcc.mult(0.005);
+    cameraVel.add(cameraAcc);
+    cameraPos.add(cameraVel);
+    cameraSpeed = cameraVel.mag()*40;
+    cameraVel.mult(0.85);
+    ox = cameraPos.x;
+    oy = cameraPos.y;
+     // cameraSpeed = dist(ox, oy, x, y);
     let zoom = 2;
     for (let i = 0; i < verticesA.length; i += 3) {
         verticesA[i] = (verticesA[i] - ox) * zoom;
@@ -396,6 +403,33 @@ draw = function() {
     currentProgram = getProgram("smooth-dots-3D");
     gl.useProgram(currentProgram);
     draw3DDots(currentProgram);
+//     draw collisions
+    vertices = [];
+    for (let i = 0; i < collisions.length; i++) {
+        vertices.push(
+            (collisions[i][0]-ox) * zoom, 
+            (collisions[i][1]-oy) * zoom, 
+            collisions[i][3], 
+            collisions[i][2]);
+    }
+    currentProgram = getProgram("cloudy-points-2");
+    gl.useProgram(currentProgram);
+    draw3DDots(currentProgram);
+    updateCollisions();
+//  Draw clouds
+    vertices = [];
+    for (let i = 0; i < clouds.length; i++) {
+        vertices.push((clouds[i][0]-ox) * zoom, (clouds[i][1]-oy) * zoom, clouds[i][2], clouds[i][3]);
+        clouds[i][0]+= 0.0025;
+        if (clouds[i][0] >= 3) {
+            clouds[i][0] -= 6;
+        }
+    }
+    currentProgram = getProgram("cloudy-points");
+    gl.useProgram(currentProgram);
+    draw3DDots(currentProgram);
+        vertices = [];
+    walkers[0].show();
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
     disturb = gl.getUniformLocation(currentProgram, "disturb"); 

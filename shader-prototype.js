@@ -14,14 +14,14 @@ ShaderProgram.prototype.init = function() {
         // Create a vertex shader object
         var vertShader = gl.createShader(gl.VERTEX_SHADER);
         // Attach vertex shader source code
-        gl.shaderSource(vertShader, this.vertText);
+        gl.shaderSource(vertShader, this.vertText.replace(/[^\x00-\x7F]/g, ""));
         // Compile the vertex shader
         gl.compileShader(vertShader);
         // fragment shader source code
         // Create fragment shader object
         var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
         // Attach fragment shader source code
-        gl.shaderSource(fragShader, this.fragText);
+        gl.shaderSource(fragShader, this.fragText.replace(/[^\x00-\x7F]/g, ""));
         // Compile the fragmentt shader
         gl.compileShader(fragShader);
         // Create a shader program object to store
@@ -372,4 +372,55 @@ vec3 hueShift2( vec3 color, float hueAdjust ){
 // 
 // ----------------------------------- End of Color blending math --------------------------
 // endGLSL
+`;
+
+mapFunction = `
+    float map(float value, float min1, float max1, float min2, float max2) {
+        return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+    }
+`;
+
+matrixTransforms = `
+    mat4 translate(float x, float y, float z) {
+        return mat4(
+            1.0,  0.0,  0.0,  0.0,
+            0.0,  1.0,  0.0,  0.0,
+            0.0,  0.0,  1.0,  0.0,
+            x,      y,    z,  1.0
+        );
+    }
+    mat4 xRotate(float a) {
+        return mat4(
+           1.0, 0.0,        0.0, 0.0,
+           0.0, cos(a), -sin(a), 0.0,
+           0.0, sin(a),  cos(a), 0.0,
+           0.0, 0.0,        0.0, 1.0
+        );
+    }
+    mat4 yRotate(float a) {
+        return mat4(
+           cos(a),  0.0, sin(a), 0.0,
+           0.0,     1.0,    0.0, 0.0,
+           -sin(a), 0.0, cos(a), 0.0,
+           0.0,     0.0,    0.0, 1.0
+        );
+    }
+    mat4 zRotate(float a) {
+        return mat4(
+           cos(a), -sin(a), 0.0, 0.0,
+           sin(a),  cos(a), 0.0, 0.0,
+           0.0,        0.0, 1.0, 0.0,
+           0.0,        0.0, 0.0, 1.0
+        );
+    }
+`;
+
+pi = `
+    #define pi 3.1415926535897932384626433832795
+`;
+
+rand = `    
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
 `;
