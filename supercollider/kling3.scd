@@ -28,10 +28,40 @@ SynthDef(\kling, {
     Out.ar(0, sig * 0.75);
 }).add;
 //~js.("walkers[0].teleport()");
-~js.("reformGraph()");
-~js.("flip('blue')");
-~s.();
+//~js.("reformGraph()");
+//~js.("flip('blue')");
+//~s.();
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   ╔═══════════════════════════════════════════════╗
+                   ║                                               ║
+                   ║     'allais tâtonnant à travers ces détours   ║
+                   ║      et par ces sentes dévoyées,              ║
+                   ║   en plus grands travail et perplexité        ║
+                   ║   que Mercure se faisant Cigogne.             ║
+                   ║                                               ║
+                   ╚═══════════════════════════════════════════════╝
+
+
+
+
 
 
 // mid
@@ -60,9 +90,9 @@ SynthDef(\kling, {
     Out.ar(0, sig * 2 * 0.5);
 }).add;
 //~js.("walkers[0].teleport()");
-~js.("reformGraph()");
-~js.("flip('red')");
-~s.();
+//~js.("reformGraph()");
+//~js.("flip('red')");
+//~s.();
 )
 
 // high

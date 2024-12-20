@@ -409,7 +409,7 @@ draw = function() {
         vertices.push(
             (collisions[i][0]-ox) * zoom, 
             (collisions[i][1]-oy) * zoom, 
-            collisions[i][3], 
+            collisions[i][4], 
             collisions[i][2]);
     }
     currentProgram = getProgram("cloudy-points-2");

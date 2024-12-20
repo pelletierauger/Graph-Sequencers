@@ -70,7 +70,7 @@ cloudyPoints2.vertText = `
         pos.x *= ratio;
         gl_Position = vec4(pos.x, pos.y, 0.0, 1.);
         gl_PointSize = 156.0;
-        gl_PointSize = map(albedo, 0., 1., 256., 50.);
+        gl_PointSize = map(albedo, 0., 1., 256., 50.) * alpha;
         // gl_PointSize = 15.0;
     }
     // endGLSL
@@ -94,7 +94,7 @@ cloudyPoints2.fragText = `
         float tint = albedo;
         // tint = pow(tint, 7.);
         // x *= 1.-tint;
-        gl_FragColor = vec4(vec3(1., pow(x,5.)*0.25, pow(x,5.)*0.25), x*tint*alpha*2.);
+        gl_FragColor = vec4(vec3(1., pow(x,5.)*0.25, pow(x,5.)*0.25), x*tint*2.);
     }
     // endGLSL
 `;
@@ -151,10 +151,12 @@ updateCamera = function(x, y) {
 collisions = [];
 
 addCollision = function(x, y, v) {
-    let alpha = map(v, 0, 0.03, 0, 1);
+    let alpha = map(v, 0, 0.03, 0.5, 1);
+    // logJavaScriptConsole(alpha);
     let velocity = map(v, 0, 0.03, 0.95, 0.8);
     collisions.push([x, y, 1, velocity, alpha]);
 };
+
 updateCollisions = function() {
     for (let i = collisions.length-1; i >= 0 ; i--) {
         collisions[i][2] *= collisions[i][3];

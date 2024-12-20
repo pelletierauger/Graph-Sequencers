@@ -114,7 +114,7 @@ Walker.prototype.show = function() {
         // ellipse(this.v.pos.x, this.v.pos.y, 20);
         if (!this.sleeping) {
             // vertices.push(this.v.pos.x, this.v.pos.y, cameraSpeed, 15);
-            vertices.push(this.v.pos.x, this.v.pos.y, 0, 15);
+            vertices.push(this.v.pos.x, this.v.pos.y, 0, 2);
             addCollision(this.v.pos.x, this.v.pos.y, this.extraVelocity);
         }
     } else {
